@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* overflow-x: hidden; */
 }
 
 a {
@@ -14,26 +15,21 @@ a {
 * {
   box-sizing: border-box;
 }
-
-.home {
-  margin-top: 50vh;
-  min-height: 120vh;
-}
-.box-container {
-  margin-top: 100px;
-}
 .box {
-  display: block;
-  height: 40px;
-  width: 40px;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
 }
 
-.green {
-  background-color: green;
+.box1 {
+  background-color: red;
+  margin-bottom: 100px;
 }
-.orange {
-  background-color: orange;
+.box2 {
+  background-color: pink;
+  margin-bottom: 100px;
 }
-.grey {
-  background-color: grey;
+.box3 {
+  background-color: yellow;
+  margin-bottom: 100px;
 }
