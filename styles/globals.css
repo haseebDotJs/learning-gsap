@@ -14,3 +14,19 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.box {
+  display: block;
+  height: 40px;
+  width: 40px;
+}
+
+.green {
+  background-color: green;
+}
+.orange {
+  background-color: orange;
+}
+.grey {
+  background-color: grey;
+}
