@@ -12,22 +12,38 @@ const Home: NextPage = () => {
     gsap.registerPlugin(ScrollTrigger);
     const from = (__className: string) => {
       return {
-        scrollTrigger: __className,
+        scrollTrigger: {
+          trigger: __className,
+          toggleActions: "restart pause reverse pause",
+        },
         rotation: 360,
-        duration: 2,
-        ease: "elastic",
+        // ease: "elastic",
         x: 0,
         // immediateRender: true,
         // paused: true,
-        opacity: 0,
+        // opacity: 0,
       };
     };
     const to = (__className: string) => {
-      return { scrollTrigger: __className, opacity: 1, x: 400, scale: 2.5 };
+      return {
+        scrollTrigger: {
+          trigger: __className,
+          toggleActions: "restart pause reverse pause",
+          start: "top center",
+          end: "bottom 80%",
+          endTrigger: "grey",
+          markers: true,
+        },
+        opacity: 1,
+        x: 400,
+        scale: 2.5,
+        duration: 3,
+        rotation: 360,
+      };
     };
-    gsap.fromTo(".green", from(".green"), to(".green"));
-    gsap.fromTo(".orange", from(".orange"), to(".orange"));
-    gsap.fromTo(".grey", from(".grey"), to(".grey"));
+    // gsap.fromTo(".green", from(".green"), to(".green"));
+    gsap.to(".orange", to(".green"));
+    // gsap.fromTo(".grey", from(".grey"), to(".grey"));
   }, []);
 
   // const play = () => {

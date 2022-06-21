@@ -14,8 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
-.box-container {
-  min-height: 55vh;
+
+.home {
+  margin-top: 50vh;
+  min-height: 120vh;
 }
 .box-container {
   margin-top: 100px;
