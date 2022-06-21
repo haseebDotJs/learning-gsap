@@ -14,7 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
-
+.box-container {
+  min-height: 55vh;
+}
+.box-container {
+  margin-top: 100px;
+}
 .box {
   display: block;
   height: 40px;
