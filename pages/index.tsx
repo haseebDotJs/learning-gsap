@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 //
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { snap } from "gsap-trial/src/all";
 
 const Home: NextPage = () => {
   const [pauseCarousel, setPauseCarousel] = useState<boolean>(false);
@@ -83,11 +84,31 @@ const Home: NextPage = () => {
   //   tween?.pause();
   // };
   useEffect(() => {
-    const tl = gsap
-      .timeline({ yoyo: true })
-      .to(".box3", { x: 100, duration: 1 })
-      .fromTo(".box2", { x: 100 }, { x: 0 })
-      .fromTo(".box1", { x: 50 }, { scale: 0.75, duration: 1 });
+    gsap.registerPlugin(ScrollTrigger);
+    const tl = gsap.timeline();
+    tl.set(".animation-text", { opacity: 0 });
+    tl.to(".section-div", {
+      scale: 1.75,
+      duration: 5,
+      x: 500,
+      rotate: 360,
+      // scrollTrigger: {
+      //   // start: "top 50%",
+      //   markers: true,
+      //   trigger: ".section-div",
+      //   toggleActions: "restart reverse none none",
+      //   scrub: true,
+      // },
+    }).to(".animation-text", { opacity: 1, ease: "ease-in-out" });
+    ScrollTrigger.create({
+      animation: tl,
+      trigger: ".section-div",
+      start: "center center",
+      end: "+=1000px",
+      scrub: true,
+      pin: true,
+      anticipatePin: 1,
+    });
   }, []);
 
   return (
@@ -98,9 +119,12 @@ const Home: NextPage = () => {
         onMouseLeave={() => setPauseCarousel(false)}
       >
         <div className="boxes">
-          <div className="box box1"></div>
-          <div className="box box2"></div>
-          <div className="box box3"></div>
+          <div className="hero">This is my hero section</div>
+          <div className="section">
+            <div className="section-div">
+              <p className="animation-text">How was the Animation</p>
+            </div>
+          </div>
         </div>
       </div>
     </React.Fragment>

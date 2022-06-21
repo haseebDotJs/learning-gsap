@@ -15,21 +15,28 @@ a {
 * {
   box-sizing: border-box;
 }
-.box {
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
+.hero {
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  background-color: red;
 }
 
-.box1 {
-  background-color: red;
-  margin-bottom: 100px;
+.section {
+  padding: 20px;
+  min-height: 500vh;
+  background-color: green;
+  display: flex;
 }
-.box2 {
-  background-color: pink;
-  margin-bottom: 100px;
-}
-.box3 {
-  background-color: yellow;
-  margin-bottom: 100px;
+
+.section-div {
+  height: 30px;
+  background-color: blue;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
