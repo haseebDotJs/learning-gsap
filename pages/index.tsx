@@ -88,10 +88,8 @@ const Home: NextPage = () => {
     const tl = gsap.timeline();
     tl.set(".animation-text", { opacity: 0 });
     tl.to(".section-div", {
-      scale: 1.75,
       duration: 5,
       x: 500,
-      rotate: 360,
       // scrollTrigger: {
       //   // start: "top 50%",
       //   markers: true,
@@ -99,7 +97,9 @@ const Home: NextPage = () => {
       //   toggleActions: "restart reverse none none",
       //   scrub: true,
       // },
-    }).to(".animation-text", { opacity: 1, ease: "ease-in-out" });
+    })
+      .to(".section-div", { scale: 1.75, rotate: 360, duration: 5 })
+      .to(".animation-text", { opacity: 1, ease: "ease-in-out" });
     ScrollTrigger.create({
       animation: tl,
       trigger: ".section-div",
@@ -107,7 +107,8 @@ const Home: NextPage = () => {
       end: "+=1000px",
       scrub: true,
       pin: true,
-      anticipatePin: 1,
+      pinSpacing: true,
+      // anticipatePin: 1,
     });
   }, []);
 
