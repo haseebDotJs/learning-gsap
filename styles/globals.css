@@ -15,21 +15,24 @@ a {
 * {
   box-sizing: border-box;
 }
-.hero {
-  font-size: 40px;
-  font-weight: bold;
-  color: #fff;
+.boxes {
   display: flex;
   align-items: center;
-  min-height: 100vh;
-  background-color: red;
+}
+.section,
+.section-child {
+  width: 300px;
+  height: 300px;
 }
 
-.section {
-  /* padding: 20px; */
-  /* min-height: 500vh; */
+.section-child-1 {
+  background-color: yellow;
+}
+.section-child-2 {
+  background-color: pink;
+}
+.section-child-3 {
   background-color: green;
-  display: flex;
 }
 
 .section-div {
@@ -39,4 +42,12 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.show-element {
+  display: flex;
+  align-items: flex-start;
+
+  justify-content: center;
+  background-color: rgb(164, 189, 255);
 }

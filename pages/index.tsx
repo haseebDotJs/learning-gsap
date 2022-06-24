@@ -1,132 +1,158 @@
 import type { NextPage } from "next";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 //
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { snap } from "gsap-trial/src/all";
+import { Flip } from "gsap/dist/Flip";
 
 const Home: NextPage = () => {
-  const [pauseCarousel, setPauseCarousel] = useState<boolean>(false);
-  // let tween;
-  // useEffect(() => {
-  //   gsap.registerPlugin(ScrollTrigger);
-  //   gsap.defaults({ ease: "none", duration: 2 });
+  const [lap, setLap] = useState(true);
+  const focusRef = useRef(null);
 
-  //   // timeline
-  //   gsap.utils.toArray(".box").forEach((panel, i) => {
-  //     ScrollTrigger.create({
-  //       trigger: panel,
-  //       // start: "top top",
-  //       pin: true,
-  //       pinSpacing: false,
-  //     });
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger, Flip);
+  }, []);
+
+  const data = [
+    {
+      parentId: "section-1-parent",
+      childId: "section-1-child",
+      text: "section 1",
+    },
+    {
+      parentId: "section-2-parent",
+      childId: "section-2-child",
+      text: "section 2",
+    },
+    {
+      parentId: "section-3-parent",
+      childId: "section-3-child",
+      text: "section 3",
+    },
+  ];
+
+  const moveToFocusDiv = (id: string) => {
+    const focusDiv = document.getElementById("focus-div");
+    const el = document.getElementById(id);
+    Flip.from(`#focus-div, #${id}, #section-1,#section-2,#section-3`, {
+      ease: "power1.inOut",
+      duration: 0.8,
+      absolute: true,
+    });
+    // setLap((prev) => !prev);
+    console.log("first", focusDiv.childNodes.length < 1);
+    if (
+      id !== focusDiv?.childNodes[0]?.getAttribute("id") ||
+      focusDiv.childNodes.length < 1
+    ) {
+      if (focusDiv?.style.minHeight !== "100vh") {
+        focusDiv.style.minHeight = "100vh";
+      }
+      // checking if there is any child in focus div
+      // focusDiv.childNodes = [];
+      // const state = Flip.getState(`#${id}`);
+      // focusDiv?.appendChild(el);
+
+      const focusDivChildId = focusDiv?.childNodes[0]?.getAttribute("id");
+      // console.log("first", focusDivChildId);
+      if (focusDivChildId && focusDivChildId !== id) {
+        console.log("running");
+        const parendivId =
+          focusDiv?.childNodes[0].getAttribute("data-parent-id");
+
+        document
+          .getElementById(parendivId)
+          ?.appendChild(focusDiv?.childNodes[0]);
+        focusDiv?.appendChild(el);
+      } else {
+        focusDiv?.appendChild(el);
+      }
+
+      // gsap.to(`#focus-div #${id}`, {
+      //   rotation: 360,
+      //   duration: 2,
+      //   scrollTrigger: {
+      //     trigger: `#focus-div #${id}`,
+      //     scrub: 1,
+      //     pin: true,
+      //     end: "+=10000",
+      //   },
+      // });
+    } else if (
+      id === focusDiv?.childNodes[0]?.getAttribute("id") &&
+      focusDiv.childNodes.length >= 1
+    ) {
+      gsap.to("#focus-div", {
+        duration: 0.5,
+      });
+      focusDiv.style.minHeight = 0;
+      const parendivId = focusDiv?.childNodes[0].getAttribute("data-parent-id");
+      document.getElementById(parendivId)?.appendChild(focusDiv?.childNodes[0]);
+      // focusDiv?.appendChild(el);
+    }
+    // Flip.from(childState, {
+    //   ease: "ease-out",+
+
+    //   duration: 0.8,
+    //   absolute: true,
+    // });
+  };
+  // const moveToFocusDiv = (id: string) => {
+  //   const state = Flip.getState(`#${id}`);
+
+  //   Flip.from(state, {
+  //     ease: "power1.inOut",
+  //     duration: 0.8,
+  //     absolute: true,
   //   });
+  //   const focusDiv = document.getElementById("focus-div");
+  //   const el = document.getElementById(id);
 
-  //   ScrollTrigger.create({
-  //     snap: 1 / 4, // snap whole page to the closest section!
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   gsap.registerPlugin(ScrollTrigger);
-  //   const from = (__className: string) => {
-  //     return {
-  //       scrollTrigger: {
-  //         trigger: __className,
-  //         toggleActions: "restart pause reverse pause",
-  //       },
-  //       rotation: 360,
-  //       // ease: "elastic",
-  //       x: 0,
-  //       // immediateRender: true,
-  //       // paused: true,
-  //       // opacity: 0,
-  //     };
-  //   };
-  //   const to = (__className: string) => {
-  //     return {
-  //       scrollTrigger: {
-  //         trigger: __className,
-  //         // toggleActions: "play pause reverse restart",
-  //         start: "center center",
-  //         // end: "bottom center",
-  //         markers: true,
-  //         scrub: 1,
-  //         pin: true,
-  //       },
-  //       opacity: 1,
-  //       x: 400,
-  //       scale: 2.5,
-  //       duration: 1,
-  //       rotation: 360,
-  //       end: "+=300",
-  //     };
-  //   };
-  //   // gsap.to(".green", to(".green"));
-  //   gsap.to(".orange", to(".orange"));
-  //   // gsap.to(".green", { x: 100, duration: 1 });
-  //   // gsap.to(".green", { y: 50, duration: 1, delay: 1 }); //wait 1 second
-  //   // gsap.to(".green", { opacity: 0, duration: 1, delay: 2 });
-  //   var tl = gsap.timeline({ repeat: 2, repeatDelay: 1 });
-  // }, []);
-
-  // const play = () => {
-  //   tween?.play();
-  // };
-  // const reverse = () => {
-  //   tween?.reverse();
-  // };
-  // const resume = () => {
-  //   tween?.resume();
-  // };
-  // const pause = () => {
-  //   tween?.pause();
+  //   focusDiv?.appendChild(el);
   // };
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const tl = gsap.timeline();
-    tl.set(".animation-text", { opacity: 0 });
-    tl.to(".section-div", {
-      duration: 5,
-      x: 500,
-      // scrollTrigger: {
-      //   // start: "top 50%",
-      //   markers: true,
-      //   trigger: ".section-div",
-      //   toggleActions: "restart reverse none none",
-      //   scrub: true,
-      // },
-    })
-      .to(".section-div", { scale: 1.75, rotate: 360, duration: 5 })
-      .to(".animation-text", { opacity: 1, ease: "ease-in-out" });
-    ScrollTrigger.create({
-      animation: tl,
-      trigger: ".section-div",
-      start: "center center",
-      end: "+=1000px",
-      scrub: true,
-      pin: true,
-      pinSpacing: true,
-      // anticipatePin: 1,
+    console.log("running");
+
+    gsap.to(`#focus-div .section-child`, {
+      rotation: 360,
+      duration: 2,
+      scrollTrigger: {
+        trigger: ``,
+        scrub: 1,
+        pin: true,
+        end: "+=10000",
+      },
     });
   }, []);
 
   return (
     <React.Fragment>
-      <div
-        className="wrapper"
-        onMouseEnter={() => setPauseCarousel(true)}
-        onMouseLeave={() => setPauseCarousel(false)}
-      >
+      <div className="wrapper">
         <div className="boxes">
-          <div className="hero">This is my hero section</div>
-          <div className="section">
-            <div className="section-div">
-              <p className="animation-text">How was the Animation</p>
-            </div>
-          </div>
+          {/* <div className="hero">This is my hero section</div> */}
+          {data.map((item, i) => {
+            return (
+              <div
+                key={item.parentId}
+                id={item.parentId}
+                className={`section `}
+              >
+                <div
+                  id={item.childId}
+                  className={`section-child ${`section-child-${i + 1}`}`}
+                  data-parent-id={item.parentId}
+                  onClick={() => moveToFocusDiv(item.childId)}
+                >
+                  {item.text}
+                </div>
+              </div>
+            );
+          })}
         </div>
+      </div>
+      <div className={`show-element`} id="focus-div" ref={focusRef}>
+        {/* <div className={`section-child ${`section-child-1`}`}>Section 1</div> */}
       </div>
     </React.Fragment>
   );
