@@ -7,7 +7,7 @@ body {
   /* overflow-x: hidden; */
 }
 
-.wrapper {
+/* .wrapper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
@@ -23,4 +23,21 @@ img {
 .insert span {
   width: 100% !important;
   height: 200px !important;
+} */
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.swap {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 300px;
+  background-color: red;
+  color: #fff;
 }

@@ -10,85 +10,76 @@ import { Flip } from "gsap/dist/Flip";
 gsap.registerPlugin(Flip, ScrollTrigger);
 
 const Home: NextPage = () => {
-  const insertRef = useRef(null);
+  const containerRef = useRef(null);
+  const squaresRef = useRef(null);
+  useEffect(() => {
+    squaresRef.current = gsap.utils.toArray(".swap");
+    const state = Flip.getState(squaresRef.current);
+    Flip.from(state, { duration: 2, ease: "power1.inOut" });
+  }, []);
 
-  const toggleRelocation = () => {
-    const relocate = document.querySelectorAll(".relocate");
+  const swap = ([a, b]: any) => {
+    if (containerRef.current) {
+      containerRef.current.children[0] === a
+        ? containerRef.current.appendChild(a)
+        : containerRef.current.appendChild(b);
+    }
+  };
+  const doFlip = () => {
+    const state = Flip.getState(squaresRef.current);
 
-    relocate.forEach((item) => {
-      insertRef.current.appendChild(item);
-    });
-    const items = gsap.utils.toArray(".move");
+    swap(squaresRef.current);
 
-    const state = Flip.getState(items);
-    Flip.from(state, {
-      // duration: 0.5,
-      scale: true,
-      absolute: true,
-      ease: "power1.inOut",
-    });
+    // Animate from the initial state to the end state
+    Flip.from(state, { duration: 2, ease: "power1.inOut" });
   };
 
-  const data = [
-    {
-      img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      extraClass: "relocate",
-      id: 1,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      id: 2,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      id: 3,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      extraClass: "relocate",
-      id: 4,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      id: 5,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      id: 6,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      extraClass: "relocate",
-      id: 7,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      id: 8,
-    },
-  ];
+  // const data = [
+  //   {
+  //     img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //     extraClass: "relocate",
+  //     id: 1,
+  //   },
+  //   {
+  //     img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //     id: 2,
+  //   },
+  //   {
+  //     img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //     id: 3,
+  //   },
+  //   {
+  //     img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //     extraClass: "relocate",
+  //     id: 4,
+  //   },
+  //   {
+  //     img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //     id: 5,
+  //   },
+  //   {
+  //     img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //     id: 6,
+  //   },
+  //   {
+  //     img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //     extraClass: "relocate",
+  //     id: 7,
+  //   },
+  //   {
+  //     img: "https://images.unsplash.com/photo-1648737154448-ccf0cafae1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+  //     id: 8,
+  //   },
+  // ];
   return (
-    <React.Fragment>
-      <div className="wrapper">
-        {data.map((item) => {
-          return (
-            <div key={item.id} className={`move ${item.extraClass || ""}`}>
-              <Image
-                src={item.img}
-                alt="random "
-                width="400px"
-                height={"200px"}
-              />
-            </div>
-          );
-        })}
+    <div className="container" ref={containerRef}>
+      <div className="swap" onClick={doFlip}>
+        1
       </div>
-      <div className={`insert`} ref={insertRef}>
-        {/* <div className={`section-child ${`section-child-1`}`}>Section 1</div> */}
+      <div className="swap" onClick={doFlip}>
+        2
       </div>
-      <div>
-        <button onClick={toggleRelocation}>Toggle Relocation</button>
-      </div>
-    </React.Fragment>
+    </div>
   );
 };
 
